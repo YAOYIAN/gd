@@ -1,0 +1,6 @@
+\beamer@sectionintoc {1}{回顾上一节课的知识点}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{这里是关于上次课程的回顾}{3}{0}{1}
+\beamer@sectionintoc {2}{节选部分的摘要}{4}{0}{2}
+\beamer@subsectionintoc {2}{1}{静电学;静止电荷之间的相互作用力}{6}{0}{2}
+\beamer@subsectionintoc {2}{2}{电场强度;磁场和电流的描述}{7}{0}{2}
+\beamer@subsectionintoc {2}{3}{光的电磁理论}{7}{0}{2}
