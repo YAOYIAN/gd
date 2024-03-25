@@ -1,0 +1,193 @@
+{% if myapp_list %}
+<head>
+    <meta charset="utf-8">
+    <title>讲义生成系统演示平台</title>
+    <style>
+        footer {
+            background-color: #fdfdfd;
+            padding: 4px;
+            text-align: center;
+            color: #999999;
+            font-size: 12px;
+        }
+    </style>
+    <style type="text/css">
+        .title_control {
+            text-align: center;
+            color: crimson;
+            font-family: "楷体", "楷体_GB2312", serif;
+            font-size: 28px;
+        }
+        .sub_title_control {
+            color: darkslateblue;
+            font-family: "楷体", "楷体_GB2312", serif;
+            font-size: 18px;
+        }
+
+        .tips_control {
+            font-family: "楷体", "楷体_GB2312", serif;
+        }
+
+        .computing_text_control {
+            text-align: center;
+        }
+
+        .computing_text_control_time {
+            text-align: center;
+            font-size: small;
+        }
+
+        .button_control {
+            text-align: center;
+        }
+
+        .input_control {
+            width: 960px;
+            margin: 20px auto;
+        }
+
+        .input_control_last {
+            width: 960px;
+            height: 30px;
+            margin: 20px auto;
+        }
+
+        textarea[type="text"], #btn1, #btn2 {
+            box-sizing: border-box;
+            text-align: left;
+            font-size: 1.0em;
+            height: 28.8em;
+            border-radius: 4px;
+            border: 1px solid #c8cccf;
+            color: #000000;
+            -web-kit-appearance: none;
+            -moz-appearance: none;
+            display: block;
+            outline: 0;
+            padding: 0 1em;
+            text-decoration: none;
+            width: 100%;
+        }
+
+        textarea[type="text"]:focus {
+            border: 2px solid #1479ee;
+        }</style>
+</head>
+<body>
+<br>
+<div class="title_control">讲义生成系统演示平台</div>
+<form action="{% url 'download' %}" method="post">
+    {% csrf_token %}
+    <div class="sub_title_control">请输入上节课的知识点:</div>
+    <div class="input_control_last">
+        <textarea name="text_field_last" type="text" placeholder="请输入文章(全中文/全英文)..."></textarea>
+    </div>
+    <div class="sub_title_control">请输入本节课的内容：</div>
+    <div class="input_control">
+        <textarea name="text_field_1" type="text" placeholder="请输入文章(全中文/全英文)..."></textarea>
+    </div>
+    <textarea style="visibility: hidden" id="hidden_ip" name="hidden_ip"></textarea>
+    <div id="result" class="computing_text_control"></div>
+    <div id="time" class="computing_text_control_time"></div>
+    <div id="data-container" class="computing_text_control"></div>
+    <br>
+    <div class="button_control">
+        <button id="myButton" type="submit" onclick="alert('确认开始运行？预计需要运行2分钟，请耐心等待，不要刷新界面')">
+            一键生成按钮
+        </button>
+    </div>
+</form>
+<ul>
+    {% for elem in myapp_list %}
+    <li>
+        <h3 class="tips_control">{{ elem.title }}</h3>
+        <p class="tips_control">{{ elem.content_1 }}</p>
+        <p class="tips_control">{{ elem.content_2 }}</p>
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+</body>
+<footer>
+    <p>&copy; Yian Yao @BNU. All rights reserved.</p>
+</footer>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- 引入jQuery -->
+<script>
+    document.getElementById("myButton").addEventListener("click", function () {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                document.getElementById("result").innerHTML = xhr.responseText;
+            }
+        };
+        xhr.open("GET", "/your-ajax-url/", true);
+        xhr.send();
+        document.getElementById("myButton").hidden = true;
+        countdown()
+    });
+    var queryString = "key1=lj";
+    const ID = Math.floor(Math.random() * 10000001);
+    alert(ID);
+    const yourData = {
+        key1: ID
+    };
+    queryString = Object.keys(yourData).map(key => key + '=' + yourData[key]).join('&');
+    fetch('/your_api_url/?' + queryString)
+        .then(response => response.text())
+        .then(data => {
+            alert(data);
+            document.getElementById("hidden_ip").innerHTML = ID;
+        })
+        .catch(error => {
+            alert("ip error")
+        });
+
+    function countdown() {
+        var countdownElement = document.getElementById("time");
+        let seconds = 420;
+        const timer = setInterval(() => {
+            console.log(seconds);
+            countdownElement.innerHTML = "最大剩余时间：" + seconds + " 秒";
+            seconds--;
+            if (document.getElementById("data-container").innerHTML == "Completed, you can download these files!") {
+                countdownElement.innerHTML = "";
+            } else if (seconds < 0) {
+                clearInterval(timer);
+                console.log("倒计时结束！");
+                countdownElement.innerHTML = "倒计时已结束";
+            }
+        }, 1000);
+    }
+
+    $(document).ready(function () {
+        $.ajax({
+            url: '/your-url/?' + queryString,  // 后端接口的URL
+            type: 'GET',  // 请求类型，可以是GET或POST
+            success: function (data) {
+                // 当请求成功时，处理返回的数据
+                $('#data-container').text(data);
+            },
+            error: function (error) {
+                // 当请求出错时，处理错误信息
+                console.log(error);
+            }
+        });
+    });
+    setInterval(function () {
+            $.ajax({
+                url: '/your-url/?' + queryString,  // 后端接口的URL
+                type: 'GET',  // 请求类型，可以是GET或POST
+                success: function (data) {
+                    // 当请求成功时，处理返回的数据
+                    $('#data-container').text(data);
+                },
+                error: function (error) {
+                    // 当请求出错时，处理错误信息
+                    console.log(error);
+                }
+            });
+            clearInterval(timer); // 点击完成后关闭timer
+        },
+        1000);
+
+</script>

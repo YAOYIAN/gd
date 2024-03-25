@@ -1,0 +1,69 @@
+{
+    "algorithm": {
+        "command": null,
+        "id": 6,
+        "name": "Embeddings from Language Models (ELMo)",
+        "tool": "AllenNLP",
+        "url": "https://github.com/HIT-SCIR/ELMoForManyLangs",
+        "version": null
+    },
+    "contents": [
+        {
+            "filename": "char.dic",
+            "format": "text"
+        },
+        {
+            "filename": "config.json",
+            "format": "json"
+        },
+        {
+            "filename": "encoder.pkl",
+            "format": "pickle"
+        },
+        {
+            "filename": "token_embedder.pkl",
+            "format": "pickle"
+        },
+        {
+            "filename": "word.dic",
+            "format": "text"
+        }
+    ],
+    "corpus": [
+        {
+            "NER": false,
+            "case preserved": false,
+            "description": "ChineseT CoNLL17 corpus",
+            "id": 35,
+            "language": "zho",
+            "lemmatized": false,
+            "public": true,
+            "stop words removal": null,
+            "tagger": null,
+            "tagset": null,
+            "tokens": 1608425218,
+            "tool": null,
+            "url": null
+        }
+    ],
+    "documentation": "https://github.com/HIT-SCIR/ELMoForManyLangs",
+    "id": 179,
+    "maintainers": [
+        {
+            "e-mail": "car@ir.hit.edu.cn",
+            "name": "Wanxiang Che"
+        },
+        {
+            "e-mail": "yjliu@ir.hit.edu.cn",
+            "name": "Yijia Liu"
+        },
+        {
+            "e-mail": "yxwang@ir.hit.edu.cn",
+            "name": "Yuxuan Wang"
+        },
+        {
+            "e-mail": "bzheng@ir.hit.edu.cn",
+            "name": "Bo Zheng"
+        }
+    ]
+}
