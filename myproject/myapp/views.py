@@ -114,7 +114,7 @@ def generate_header(doc):
     header = PageStyle("header")
     # Create left header
     with header.create(Head("L")):
-        header.append("Date: ")
+        header.append("日期: ")
         header.append(NoEscape(r'\today'))
 
     # Create center header
@@ -125,13 +125,13 @@ def generate_header(doc):
         header.append(simple_page_number())
     # Create left footer
     with header.create(Foot("L")):
-        header.append("Left Footer")
+        header.append(" ")
     # Create center footer
     with header.create(Foot("C")):
-        header.append("Center Footer")
+        header.append(" ")
     # Create right footer
     with header.create(Foot("R")):
-        header.append("Right Footer")
+        header.append(" ")
 
     doc.preamble.append(header)
     doc.change_document_style("header")
@@ -807,21 +807,21 @@ def process_input2_4files(input_passage,user_input_last,user_ip):
     doc.packages.add(Package('ctex'))
     generate_header(doc)
     with doc.create(MiniPage(align='c')):
-        doc.append(LargeText(bold("Summary of the article")))
+        doc.append(LargeText(bold("本节课的教师版讲义")))
         doc.append(LineBreak())
-        doc.append(MediumText(italic("Automatically generated")))
+        doc.append(MediumText(italic("由人工智能自动生成")))
     ppt = Document(user_ip+'/prezip/ppt', documentclass='beamer')
     ppt.packages.add(Package('ctex'))
     ppt.preamble.append(Command('usetheme', "Madrid"))  # Madrid, CambridgeUS
     ppt.preamble.append(Command('usecolortheme', "beaver"))  # beaver, default
     ppt.preamble.append(Command('usepackage', "blkarray"))
-    ppt.append(Command('title', 'Slides for Lecture Notes'))
-    ppt.append(Command('subtitle', Command('textit', 'Automatically generated')))
+    ppt.append(Command('title', '本节课的演示文档'))
+    ppt.append(Command('subtitle', Command('textit', '由人工智能生成')))
     ppt.append(Command('author', 'Yian Yao'))
     ppt.append(Command('date', NoEscape(r'\today')))
     ppt.append(NoEscape(r'\maketitle'))
     ppt.append(Command('begin', 'frame'))
-    ppt.append(Command("frametitle", "Table of Contents"))
+    ppt.append(Command("frametitle", "目录"))
     ppt.append(Command('tableofcontents'))
     ppt.append(Command('end', 'frame'))
 
@@ -863,8 +863,8 @@ def process_input2_4files(input_passage,user_input_last,user_ip):
             doc.append("\n")
             doc.append("**Next, we will learn several important knowledge points.**")
 
-            ppt.append(Command('section', 'Last Course Review'))
-            ppt.append(Command('subsection', 'Here is a review of the last course'))
+            ppt.append(Command('section', '回顾上一节课的知识点'))
+            ppt.append(Command('subsection', '这里是关于上次课程的回顾'))
 
     #=========================
 
@@ -901,9 +901,9 @@ def process_input2_4files(input_passage,user_input_last,user_ip):
     for show_allsumm_sentence in some_allsumm_text:
         if result_fl["data"]["src"] == 'en':
             ppt.append(Command('begin', 'frame'))
-            ppt.append(Command("frametitle", Command("textsc", NoEscape(r'Last Course Review:'))))
+            ppt.append(Command("frametitle", Command("textsc", NoEscape(r'回顾上一节课的知识点:'))))
             ppt.append(NoEscape(r'\begin{itemize}'))
-            ppt.append(Command('item', Command("bf", "Last Course Review:")))
+            ppt.append(Command('item', Command("bf", "回顾上一节课的知识点:")))
             ppt.append(NoEscape(r'\begin{itemize}'))
 
             nnnn = nlp(show_allsumm_sentence)
@@ -958,11 +958,11 @@ def process_input2_4files(input_passage,user_input_last,user_ip):
         with doc.create(Section("Important knowledge points and summaries of each excerpt")):
             doc.append(
                 italic('The article is automatically analyzed, divided into serval sections, and summarized below.\n'))
-        ppt.append(Command('section', 'Section Summary'))
+        ppt.append(Command('section', '节选部分的摘要'))
         ppt.append(Command('begin', 'frame'))
-        ppt.append(Command("frametitle", Command("textsc", NoEscape(r'Sections Summary Description'))))
+        ppt.append(Command("frametitle", Command("textsc", NoEscape(r'节选部分摘要的说明'))))
         ppt.append(NoEscape(r'\begin{itemize}'))
-        ppt.append(Command('item', Command("bf", "After analysis, there are {} sections in this course.".format(
+        ppt.append(Command('item', Command("bf", "经过分析, 本节课的内容被分为{}个片段。".format(
             len(titles)))))
         ppt.append(NoEscape(r'\begin{itemize}'))
         for title_str in titles:
